@@ -21,91 +21,107 @@ produces:
   - application/json
 
 tags:
-  - name: UrlShortener
-    description: This section contains endpoints for shortening URLs
+  - name: recipe-master
+
 paths:
-  /urls:
+  /recipes:
     get:
-      summary: Returns the long URL behind the shortened identifier
-      description: Takes the shortened identifier of a URL and returns the long version of it. Returns Error-Codes if the URL can not be found.
-      operationId: retrieve-long-url
+      summary: Returns a recipe with the given name.
+      description: Takes the short recipe name and returns the recipe behind it.
+      operationId: retrieve-recipe
       tags:
-        - UrlShortener
+        - recipe-master
       parameters:
-        - name: shortUrl
+        - name: recipeIdentifier
           in: query
-          description: The short URL.
           required: true
+          description: The unique recipe identifier
           type: string
       responses:
         '200':
           description: OK.
           schema:
             type: object
-            $ref: '#/definitions/LongUrlResponse'
-            description: The long URL corresponding to the given identifier.
+            $ref: '#/definitions/Recipe'
         '404':
-          description: URL not found.
+          description: Recipe not found.
     post:
-      summary: Creates a shortened URL-identifier
-      description: Takes a long URL as a parameter and generates a shortened URL out of it. If succesful, returns an UrlContainer-Object.
-      operationId: create-short-url
+      summary: Created a recipe.
+      operationId: create-recipe
       tags:
-        - UrlShortener
+        - recipe-master
       parameters:
-        - name: url
-          in: query
-          description: The long URL out of which the short one should be created.
+        - name: recipeObject
+          in: body
           required: true
-          type: string
-      responses:
-        '200':
-          description: OK. Short URL was created.
           schema:
-            type: object
-            $ref: '#/definitions/ShortUrlResponse'
+            $ref: '#/definitions/Recipe'
+      responses:
+        '200':
+          description: OK.
         '400':
-          description: Bad Request. The given URL was invalid.
-    delete:
-      summary: Deletes a Shortened URL.
-      description: Takes the Shortened URL as a parameter and deletes it. Returns the deleted URL-Object.
-      operationId: delete-short-url
+          description: Bad Request.
+    put:
+      summary: Updates a recipe with new information.
+      operationId: put-recipe
       tags:
-        - UrlShortener
+        - recipe-master
       parameters:
-        - name: shortUrl
+        - name: recipeIdentifier
+          in: path
+          required: true
+          type: string
+        - name: recipeObject
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Recipe'
+      responses:
+        '200':
+          description: OK.
+        '400':
+          description: Bad Request.
+    delete:
+      summary: Deletes a recipe.
+      operationId: delete-recipe
+      parameters:
+        - name: recipeIdentifier
           in: query
-          description: The short URL.
           required: true
           type: string
       responses:
         '200':
-          description: OK. Short URL was deleted.
+          description: OK.
         '404':
-          description: URL not found.
+          description: Not Found.
+
+
 
 definitions:
-  ShortUrlResponse:
+  Recipe:
     type: object
-    description: Contains the short and long URL.
+    description: Contains a recipe
     properties:
-      shortUrl:
+      identifier:
         type: string
-        description: String containing the shortened URL.
-        example: mdhnsh32
-      longUrl:
+        description: Holds the shortened unique identifier of the recipe
+      title:
         type: string
-        description: String containing the long URL.
-        example: https://www.youtube.com
+      category:
+        type: object
+        $ref: '#/definitions/RecipeCategory'
+      picture:
+        type: string
+      description:
+        type: string
       created-at:
         type: string
         format: date-time
-        description: Timestamp of shortened URL creation in canonical time.
-  LongUrlResponse:
+  RecipeCategory:
     type: object
-    description: Contains only the long URL.
     properties:
-      longUrl:
+      name:
         type: string
-        description: String containing the long URL.
-        example: https://www.youtube.com
+      parent:
+        type: object
+        $ref: '#/definitions/RecipeCategory'
