@@ -1,0 +1,111 @@
+swagger: '2.0'
+info:
+  version: 0.0.1-SNAPSHOT
+  title: Recipe Master - Recipe-API.
+  description: >
+    
+    
+
+host: 127.0.0.1:8080
+
+basePath: /
+
+schemes:
+  - https
+  - http
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+tags:
+  - name: UrlShortener
+    description: This section contains endpoints for shortening URLs
+paths:
+  /urls:
+    get:
+      summary: Returns the long URL behind the shortened identifier
+      description: Takes the shortened identifier of a URL and returns the long version of it. Returns Error-Codes if the URL can not be found.
+      operationId: retrieve-long-url
+      tags:
+        - UrlShortener
+      parameters:
+        - name: shortUrl
+          in: query
+          description: The short URL.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK.
+          schema:
+            type: object
+            $ref: '#/definitions/LongUrlResponse'
+            description: The long URL corresponding to the given identifier.
+        '404':
+          description: URL not found.
+    post:
+      summary: Creates a shortened URL-identifier
+      description: Takes a long URL as a parameter and generates a shortened URL out of it. If succesful, returns an UrlContainer-Object.
+      operationId: create-short-url
+      tags:
+        - UrlShortener
+      parameters:
+        - name: url
+          in: query
+          description: The long URL out of which the short one should be created.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK. Short URL was created.
+          schema:
+            type: object
+            $ref: '#/definitions/ShortUrlResponse'
+        '400':
+          description: Bad Request. The given URL was invalid.
+    delete:
+      summary: Deletes a Shortened URL.
+      description: Takes the Shortened URL as a parameter and deletes it. Returns the deleted URL-Object.
+      operationId: delete-short-url
+      tags:
+        - UrlShortener
+      parameters:
+        - name: shortUrl
+          in: query
+          description: The short URL.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK. Short URL was deleted.
+        '404':
+          description: URL not found.
+
+definitions:
+  ShortUrlResponse:
+    type: object
+    description: Contains the short and long URL.
+    properties:
+      shortUrl:
+        type: string
+        description: String containing the shortened URL.
+        example: mdhnsh32
+      longUrl:
+        type: string
+        description: String containing the long URL.
+        example: https://www.youtube.com
+      created-at:
+        type: string
+        format: date-time
+        description: Timestamp of shortened URL creation in canonical time.
+  LongUrlResponse:
+    type: object
+    description: Contains only the long URL.
+    properties:
+      longUrl:
+        type: string
+        description: String containing the long URL.
+        example: https://www.youtube.com
