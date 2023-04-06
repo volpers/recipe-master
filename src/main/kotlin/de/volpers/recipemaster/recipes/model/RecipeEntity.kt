@@ -7,23 +7,23 @@ import java.time.OffsetDateTime
 @Entity
 @Table(name = "recipes")
 class RecipeEntity(
-    @Column(name = "identifier")
-    var identifier: String? = null,
-
     @Column(name = "title")
-    var title: String? = null,
+    var title: String = "",
+
+    @Column(name = "identifier")
+    var identifier: String? = "",
 
     @Column(name = "picture")
-    var picture: String? = null,
+    var picture: String? = "",
 
     @Column(name = "description")
-    var description: String? = null,
+    var description: String? = "",
 
     @Column(name = "link")
-    var link: String? = null,
+    var link: String? = "",
 
     @Column(name = "category")
-    var category: String? = null
+    var category: String? = ""
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -35,18 +35,22 @@ class RecipeEntity(
     var createdAt: OffsetDateTime? = null
 
     class Builder {
-        var identifier: String = ""
-        var title: String = ""
-        var picture: String = ""
-        var description: String = ""
-        var link: String = ""
-        var category: String = ""
+        private var identifier: String? = ""
+        private var title: String = ""
+        private var picture: String? = ""
+        private var description: String? = ""
+        private var link: String? = ""
+        private var category: String? = ""
 
-        fun setIdentifier(identifier: String) = apply {this.identifier = identifier}
-        fun setTitle(identifier: String) = apply {this.identifier = identifier}
-        fun setPicture(identifier: String) = apply {this.identifier = identifier}
-        fun setDescription(identifier: String) = apply {this.identifier = identifier}
-        fun setLink(identifier: String) = apply {this.identifier = identifier}
-        fun setCategory(identifier: String) = apply {this.identifier = identifier}
+        fun title(title: String) = apply {this.title = title}
+        fun identifier(identifier: String?) = apply {this.identifier = identifier}
+        fun picture(picture: String?) = apply {this.picture = picture}
+        fun description(description: String?) = apply {this.description = description}
+        fun link(link: String?) = apply {this.link = link}
+        fun category(category: String?) = apply {this.category = category}
+
+        fun build() : RecipeEntity {
+            return RecipeEntity(title, identifier, picture, description, link, category)
+        }
     }
 }

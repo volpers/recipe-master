@@ -2,6 +2,7 @@ package de.volpers.recipemaster.recipes
 
 import com.volpers.recipemaster.api.RecipesApi
 import com.volpers.recipemaster.api.model.Recipe
+import com.volpers.recipemaster.api.model.RecipeStatusResponse
 import de.volpers.recipemaster.recipes.model.RecipeEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
@@ -13,9 +14,9 @@ class RecipeController(
     private val recipeRetrievalService: RecipeRetrievalService
 ) : RecipesApi
 {
-    override fun createRecipe(recipeObject: Recipe): ResponseEntity<Unit> {
-        recipeCreationService.createRecipe(recipeObject)
-        return ResponseEntity.ok().build()
+    override fun createRecipe(recipeObject: Recipe): ResponseEntity<RecipeStatusResponse> {
+        val identifier = recipeCreationService.createRecipe(recipeObject)
+        return ResponseEntity.ok().body(identifier)
     }
 
     override fun deleteRecipe(recipeIdentifier: String): ResponseEntity<Unit> {

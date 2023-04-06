@@ -6,12 +6,12 @@ import de.volpers.recipemaster.recipes.model.RecipeEntity
 import org.springframework.stereotype.Component
 
 @Component
-class EntityMapper {
+class RecipeEntityMapper {
 
-    fun recipeEntityToDTO(recipeEntity:RecipeEntity)
+    fun entityToDTO(recipeEntity:RecipeEntity)
     = Recipe(
-        recipeEntity.identifier,
         recipeEntity.title,
+        recipeEntity.identifier,
         RecipeCategory(recipeEntity.category) ,
         recipeEntity.picture,
         recipeEntity.description,
@@ -20,5 +20,12 @@ class EntityMapper {
     )
 
     fun dtoToEntity(recipeDTO:Recipe, identifier:String)
-    = RecipeEntity()
+    = RecipeEntity.Builder()
+        .identifier(identifier)
+        .title(recipeDTO.title)
+        .category("Test")
+        .link(recipeDTO.link)
+        .description(recipeDTO.description)
+        .picture(recipeDTO.picture)
+        .build()
 }

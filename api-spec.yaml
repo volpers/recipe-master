@@ -59,6 +59,9 @@ paths:
       responses:
         '200':
           description: OK.
+          schema:
+            type: object
+            $ref: '#/definitions/RecipeStatusResponse'
         '400':
           description: Bad Request.
     put:
@@ -119,6 +122,8 @@ definitions:
       created-at:
         type: string
         format: date-time
+    required:
+      - title
   RecipeCategory:
     type: object
     properties:
@@ -127,3 +132,10 @@ definitions:
       parent:
         type: object
         $ref: '#/definitions/RecipeCategory'
+  RecipeStatusResponse:
+    type: object
+    properties:
+      identifier:
+        type: string
+    required:
+      - identifier
