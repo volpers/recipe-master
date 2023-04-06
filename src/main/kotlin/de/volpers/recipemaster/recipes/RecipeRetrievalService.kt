@@ -3,7 +3,7 @@ package de.volpers.recipemaster.recipes
 import com.volpers.recipemaster.api.model.Recipe
 import de.volpers.recipemaster.recipes.errorhandling.exceptions.RecipeNotFoundException
 import de.volpers.recipemaster.recipes.model.RecipeRepository
-import de.volpers.recipemaster.util.RecipeEntityMapper
+import de.volpers.recipemaster.recipes.model.mapper.RecipeEntityMapper
 import org.springframework.stereotype.Service
 
 @Service

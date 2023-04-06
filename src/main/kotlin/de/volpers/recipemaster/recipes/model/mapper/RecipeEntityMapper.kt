@@ -1,4 +1,4 @@
-package de.volpers.recipemaster.util
+package de.volpers.recipemaster.recipes.model.mapper
 
 import com.volpers.recipemaster.api.model.Recipe
 import com.volpers.recipemaster.api.model.RecipeCategory

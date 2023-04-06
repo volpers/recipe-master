@@ -4,17 +4,17 @@ import com.volpers.recipemaster.api.model.Recipe
 import com.volpers.recipemaster.api.model.RecipeStatusResponse
 import de.volpers.recipemaster.recipes.errorhandling.exceptions.RecipeAlreadyExistsException
 import de.volpers.recipemaster.recipes.errorhandling.exceptions.RecipeNotFoundException
+import de.volpers.recipemaster.recipes.model.RecipeEntity
 import de.volpers.recipemaster.recipes.model.RecipeRepository
-import de.volpers.recipemaster.util.RecipeEntityMapper
+import de.volpers.recipemaster.recipes.model.mapper.RecipeEntityMapper
 import org.apache.commons.codec.digest.DigestUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.Clock
 
 @Service
 class RecipeCreationService (
     private val recipeRepository: RecipeRepository,
-    private val recipeEntityMapper: RecipeEntityMapper
+    private val recipeEntityMapper : RecipeEntityMapper
 ){
     companion object {
         const val IDENTIFIER_LENGTH = 8
@@ -35,8 +35,17 @@ class RecipeCreationService (
         if(!recipeRepository.existsByIdentifier(recipeIdentifier)) {
             throw RecipeNotFoundException()
         }
-        val updatedRecipeEntity = recipeEntityMapper.dtoToEntity(recipeObject, recipeIdentifier)
-        recipeRepository.updateByIdentifier(recipeIdentifier, updatedRecipeEntity)
+        val recipe = updateRecipeEntity(recipeIdentifier, recipeObject)
+        recipeRepository.save(recipe)
+    }
+
+    private fun updateRecipeEntity(recipeIdentifier: String, recipeObject: Recipe): RecipeEntity {
+        val recipe = recipeRepository.findByIdentifier(recipeIdentifier)
+        recipe.title = recipeObject.title
+        recipe.description = recipeObject.description
+        recipe.link = recipeObject.link
+        recipe.picture = recipeObject.picture
+        return recipe
     }
 
     private fun createRecipeIdentifier(recipeTitle:String) : String{
