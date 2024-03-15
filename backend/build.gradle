@@ -55,6 +55,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+test {
+	systemProperty 'spring.profiles.active', 'test'
+}
+
 openApiGenerate {
 	generatorName = "kotlin-spring"
 	inputSpec = "$rootDir/api-spec.yaml".toString()
