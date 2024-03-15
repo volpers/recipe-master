@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Run Tests and build Frontend
+    name: Build Frontend
     runs-on: ubuntu-latest
     steps:
       - name: Setup Repo
