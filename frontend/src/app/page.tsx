@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
+    <main>
       HELLO WORLD!
         <Link href={"/recipes"}>Recipes</Link>
     </main>
