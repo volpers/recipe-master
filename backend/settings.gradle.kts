@@ -1,2 +1,2 @@
-rootProject.name = "recipe-master"
-include("backend")
+rootProject.name = "backend"
+
