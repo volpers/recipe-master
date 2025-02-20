@@ -31,8 +31,8 @@ dependencies {
 	implementation('commons-codec:commons-codec:1.18.0')
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
 	testImplementation('org.testcontainers:postgresql:1.20.5')
-	testImplementation('org.testcontainers:testcontainers:1.20.4')
-	testImplementation('org.testcontainers:junit-jupiter:1.20.4')
+	testImplementation('org.testcontainers:testcontainers:1.20.5')
+	testImplementation('org.testcontainers:junit-jupiter:1.20.5')
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.16")
