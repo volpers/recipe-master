@@ -30,9 +30,9 @@ dependencies {
 	implementation('org.hibernate:hibernate-validator:8.0.2.Final')
 	implementation('commons-codec:commons-codec:1.18.0')
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.13.2'
-	testImplementation('org.testcontainers:postgresql:1.21.2')
-	testImplementation('org.testcontainers:testcontainers:1.21.2')
-	testImplementation('org.testcontainers:junit-jupiter:1.21.2')
+	testImplementation('org.testcontainers:postgresql:1.21.3')
+	testImplementation('org.testcontainers:testcontainers:1.21.3')
+	testImplementation('org.testcontainers:junit-jupiter:1.21.3')
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.14.4")
